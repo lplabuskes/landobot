@@ -6,7 +6,7 @@ source /environment.sh
 dt-launchfile-init
 
 # launch publisher
-rosrun my_package talker
+roslaunch my_package pubsub.launch
 
 # wait for app to end
 dt-launchfile-join

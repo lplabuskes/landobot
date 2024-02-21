@@ -1,0 +1,6 @@
+<launch>
+
+    <node pkg="my_package" name="my_pub" type="talker" output="screen" />
+    <node pkg="my_package" name="my_sub" type="listener" output="screen" />
+
+</launch>
