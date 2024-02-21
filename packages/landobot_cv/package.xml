@@ -1,0 +1,14 @@
+<package format="2">
+  <name>landobot_cv</name>
+  <version>0.0.1</version>
+  <description>
+  Package for computer vision related nodes.
+  </description>
+  <maintainer email="lplabuskes@gmail.com">Landon Labuskes</maintainer>
+  <license>None</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>opencv2</depend>
+</package>
