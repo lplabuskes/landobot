@@ -1,0 +1,12 @@
+<package format="2">
+  <name>landobot_control</name>
+  <version>0.0.1</version>
+  <description>
+  Package for controlling Duckiebot and following trajectories.
+  </description>
+  <maintainer email="lplabuskes@gmail.com">Landon Labuskes</maintainer>
+  <license>None</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>duckietown_msgs</depend>
+</package>
