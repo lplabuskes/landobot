@@ -13,7 +13,7 @@ dt-launchfile-init
 # NOTE: Use `dt-exec COMMAND` to run the main process (blocking process)
 
 # launching app
-dt-exec rosrun landobot_control wheel_control
+dt-exec rosrun landobot_control wheel_control __ns:=landobot
 
 
 # ----------------------------------------------------------------------------

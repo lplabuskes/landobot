@@ -1,6 +1,3 @@
-#include <cstdlib>
-#include <sstream>
-
 #include <ros/ros.h>
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
@@ -22,9 +19,7 @@ class CameraReader
         {
             // Subscribe to image from duckiebot
             image_transport::TransportHints hints("compressed");
-            std::stringstream camera_topic;
-            camera_topic << "/" << std::getenv("VEHICLE_NAME") << "/camera_node/image";
-            image_sub_ = it_.subscribe(camera_topic.str(), 1, &CameraReader::image_callback, this, hints);
+            image_sub_ = it_.subscribe("camera_node/image", 1, &CameraReader::image_callback, this, hints);
 
             cv::namedWindow(OPENCV_WINDOW);
         }

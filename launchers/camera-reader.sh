@@ -13,7 +13,7 @@ dt-launchfile-init
 # NOTE: Use `dt-exec COMMAND` to run the main process (blocking process)
 
 # launching app
-dt-exec rosrun landobot_cv camera_reader
+dt-exec rosrun landobot_cv camera_reader __ns:=landobot
 
 
 # ----------------------------------------------------------------------------

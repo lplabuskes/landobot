@@ -1,5 +1,3 @@
-#include <cstdlib>
-#include <string>
 #include <signal.h>
 
 #include "ros/ros.h"
@@ -22,9 +20,8 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
     signal(SIGINT, on_shutdown);
 
-    std::string vehicle_name = std::getenv("VEHICLE_NAME");
     ros::Publisher pub = nh.advertise<duckietown_msgs::Twist2DStamped>(
-                        "/"+vehicle_name+"/car_cmd_switch_node/cmd", 1);
+                        "car_cmd_switch_node/cmd", 1);
     ros::Rate loop_rate(10);
 
     duckietown_msgs::Twist2DStamped msg;

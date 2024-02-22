@@ -1,6 +1,3 @@
-#include <cstdlib>
-#include <string>
-
 #include "ros/ros.h"
 #include "duckietown_msgs/WheelEncoderStamped.h"
 
@@ -18,9 +15,8 @@ class EncoderReader
         EncoderReader()
         {
             // Set up subscriptions
-            std::string vehicle_name = std::getenv("VEHICLE_NAME");
-            left_encoder_sub_ = nh_.subscribe("/" + vehicle_name + "/left_wheel_encoder_node/tick", 1000, &EncoderReader::left_encoder_callback, this);
-            right_encoder_sub_ = nh_.subscribe("/" + vehicle_name + "/right_wheel_encoder_node/tick", 1000, &EncoderReader::right_encoder_callback, this);
+            left_encoder_sub_ = nh_.subscribe("left_wheel_encoder_node/tick", 1000, &EncoderReader::left_encoder_callback, this);
+            right_encoder_sub_ = nh_.subscribe("right_wheel_encoder_node/tick", 1000, &EncoderReader::right_encoder_callback, this);
             // Set up timer
             timer_ = nh_.createTimer(ros::Duration(0.05), &EncoderReader::timer_callback, this);
         }
