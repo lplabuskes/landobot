@@ -1,0 +1,12 @@
+<package format="2">
+  <name>landobot_slam</name>
+  <version>0.0.1</version>
+  <description>
+  Package for fusing sensor inputs and doing SLAM.
+  </description>
+  <maintainer email="lplabuskes@gmail.com">Landon Labuskes</maintainer>
+  <license>None</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>duckietown_msgs</depend>
+</package>
