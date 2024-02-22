@@ -3,15 +3,13 @@
 #include <signal.h>
 
 #include "ros/ros.h"
-#include "duckietown_msgs/WheelsCmdStamped.h"
+#include "duckietown_msgs/Twist2DStamped.h"
 
-
-const float THROTTLE_LEFT = 0.5;
-const int DIRECTION_LEFT = 1;
-const float THROTTLE_RIGHT = 0.3;
-const int DIRECTION_RIGHT = -1;
 
 sig_atomic_t volatile g_shutdown_flag = 0;
+
+float VELOCITY = 0.3;
+float OMEGA = 4.0;
 
 void on_shutdown(int sig)
 {
@@ -25,13 +23,13 @@ int main(int argc, char **argv)
     signal(SIGINT, on_shutdown);
 
     std::string vehicle_name = std::getenv("VEHICLE_NAME");
-    ros::Publisher pub = nh.advertise<duckietown_msgs::WheelsCmdStamped>(
-                        "/"+vehicle_name+"/wheels_driver_node/wheels_cmd", 1);
+    ros::Publisher pub = nh.advertise<duckietown_msgs::Twist2DStamped>(
+                        "/"+vehicle_name+"/car_cmd_switch_node/cmd", 1);
     ros::Rate loop_rate(10);
 
-    duckietown_msgs::WheelsCmdStamped msg;
-    msg.vel_left = THROTTLE_LEFT*DIRECTION_LEFT;
-    msg.vel_right = THROTTLE_RIGHT*DIRECTION_RIGHT;
+    duckietown_msgs::Twist2DStamped msg;
+    msg.v = VELOCITY;
+    msg.omega = OMEGA;
 
     while (!g_shutdown_flag)
     {
@@ -39,8 +37,8 @@ int main(int argc, char **argv)
         loop_rate.sleep();
     }
     
-    msg.vel_left = 0.0;
-    msg.vel_right = 0.0;
+    msg.v = 0.0;
+    msg.omega = 0.0;
     pub.publish(msg);
 
     ros::shutdown();
