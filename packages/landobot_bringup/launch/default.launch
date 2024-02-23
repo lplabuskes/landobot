@@ -1,0 +1,7 @@
+<launch>
+  <group ns="landobot">
+    <node  name="camera_info_repub" pkg="landobot_bringup" type="camera_info_repub.py" output="screen">
+      <param name="~extrinsics_path" value="$(find landobot_bringup)/config/camera_extrinsics.yaml"/>
+    </node>
+  </group>
+</launch>
