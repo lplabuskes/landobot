@@ -1,7 +1,10 @@
 <launch>
   <group ns="landobot">
     <node  name="camera_info_repub" pkg="landobot_bringup" type="camera_info_repub.py" output="screen">
-      <param name="~extrinsics_path" value="$(find landobot_bringup)/config/camera_extrinsics.yaml"/>
+      <param name="extrinsics_path" value="$(find landobot_bringup)/config/camera_extrinsics.yaml"/>
+    </node>
+    <node  name="camera_reader" pkg="landobot_cv" type="camera_reader" output="screen" required="true">
+      <param name="use_republished" value="true"/>
     </node>
   </group>
 </launch>

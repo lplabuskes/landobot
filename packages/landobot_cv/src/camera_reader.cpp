@@ -8,7 +8,7 @@
 #include <opencv2/highgui/highgui.hpp>
 
 static const std::string OPENCV_WINDOW = "camera-reader";
-static const std::string OPENCV_WINDOW_2 = "camera-gray";
+static const std::string OPENCV_WINDOW_2 = "camera-transformed";
 
 class CameraReader
 {
@@ -28,14 +28,26 @@ class CameraReader
             image_transport::TransportHints hints("compressed");
             image_sub_ = it_.subscribe("camera_node/image", 1, &CameraReader::image_callback, this, hints);
 
+            // Determine which camera info topic to use
+            bool use_repub = false;
+            bool success = ros::param::get("~use_republished", use_repub);
+            
             // Subscribe to camera info
-            info_sub_ = nh_.subscribe("camera_node/camera_info", 1, &CameraReader::camera_info_callback, this);
+            if (!success || !use_repub)
+            {
+                info_sub_ = nh_.subscribe("camera_node/camera_info", 1, &CameraReader::camera_info_callback, this);
+            }
+            else
+            {
+                info_sub_ = nh_.subscribe("camera_info_repub/camera_info", 1, &CameraReader::camera_info_callback, this);
+            }
 
             cv::namedWindow(OPENCV_WINDOW);
         }
 
         ~CameraReader()
         {
+            ros::param::del("~use_republished");
             cv::destroyWindow(OPENCV_WINDOW);
         }
 
@@ -47,12 +59,16 @@ class CameraReader
                 return;
             }
             cv::Mat camera_matrix(3, 3, CV_64FC1, &(info->K));
-            cv::Mat distortion(5, 1, CV_64FC1);
+            cv::Mat distortion(5, 1, CV_64FC1); // Not sure why I can't use the above syntax on this one
             for (int i = 0; i < 5; ++i)
             {
                 distortion.at<double>(i, 0) = (info->D)[i];
             }
-            cv::Mat R = cv::Mat::eye(3, 3, CV_64FC1);
+            cv::Mat R(3, 3, CV_64FC1);
+            for (int i = 0; i < 9; ++i)
+            {
+                R.at<double>(i/3, i%3) = (info->R)[i];
+            }
             cv::Size size(info->width, info->height);
             cv::Mat new_camera_matrix = cv::getOptimalNewCameraMatrix(camera_matrix, distortion, size, 0);
             cv::initUndistortRectifyMap(camera_matrix, distortion, R, new_camera_matrix, size, CV_32FC1, map1_, map2_);
