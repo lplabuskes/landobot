@@ -1,0 +1,12 @@
+<package format="2">
+  <name>landobot_bringup</name>
+  <version>0.0.1</version>
+  <description>
+  Package for launch files and small utilities.
+  </description>
+  <maintainer email="lplabuskes@gmail.com">Landon Labuskes</maintainer>
+  <license>None</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>sensor_msgs</depend>
+</package>
